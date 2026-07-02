@@ -4,13 +4,14 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Pokémon Ultimate Type Dex | 포켓몬 타입 조합 도감</title>
-  <meta name="description" content="1세대부터 9세대까지 모든 포켓몬의 타입을 조합하여 검색할 수 있는 비영리 팬 도감 사이트입니다. Pokémon Type Search Pro.">
-  <meta name="keywords" content="포켓몬 타입, 포켓몬 검색, 포켓몬 상성, 속성 조합, 오리지널 도감, Pokemon Type, Pokémon Search, Type Matcher">
-  <meta name="author" content="Fan-made Pokémon Dex">
+  <!-- 타이틀을 비공식 연구소 느낌으로 안전하게 변경 -->
+  <title>Fanmade | 비공식 포켓몬 타입 조합기</title>
+  <meta name="description" content="본 사이트는 비공식 팬 사이트입니다. 1세대부터 9세대까지 포켓몬의 타입을 조합하여 검색할 수 있는 개인 학습용 비영리 공간입니다.">
+  <meta name="keywords" content="포켓몬 타입, 타입 조합, 포켓몬 상성, 비공식 도감, Pocket Type Lab, Type Matcher, Unofficial Pokémon Fan Page">
+  <meta name="author" content="Unofficial Fan Project">
   
-  <meta property="og:title" content="포켓몬 타입 조합 도감 🔍">
-  <meta property="og:description" content="원하는 속성을 선택해서 매칭되는 포켓몬을 찾아보세요!">
+  <meta property="og:title" content="포켓몬 타입 조합 검색기 | Fanmade 🔍">
+  <meta property="og:description" content="[비공식 팬페이지] 원하시는 포켓몬 타입을 조합하여 해당하는 대상을 찾아보세요.">
   <meta property="og:type" content="website">
 
   <style>
@@ -18,6 +19,9 @@
     body { background-color: #f1f5f9; color: #1e293b; padding: 40px 20px 20px 20px; min-height: 100vh; display: flex; flex-direction: column; }
     .container { max-width: 1200px; margin: 0 auto; display: none; flex: 1; width: 100%; }
     
+    /* 상단 비공식 경고 배지 */
+    .unofficial-banner { background-color: #fee2e2; color: #991b1b; text-align: center; padding: 10px; font-size: 0.85rem; font-weight: 700; border-radius: 8px; margin-bottom: 20px; border: 1px solid #fca5a5; }
+
     /* 1단계: 언어 선택 모달 */
     .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.85); display: flex; justify-content: center; align-items: center; z-index: 1000; }
     .modal { background: white; padding: 40px; border-radius: 20px; text-align: center; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25); max-width: 450px; width: 90%; }
@@ -27,7 +31,7 @@
     .lang-btn:hover { border-color: #3b82f6; color: #3b82f6; background: #eff6ff; transform: translateY(-2px); }
 
     /* 헤더 디자인 */
-    h1 { text-align: center; margin-bottom: 12px; font-size: 2.5rem; font-weight: 800; color: #0f172a; }
+    h1 { text-align: center; margin-bottom: 12px; font-size: 2.5rem; font-weight: 800; color: #0f172a; letter-spacing: -0.5px; }
     .subtitle { text-align: center; color: #64748b; margin-bottom: 35px; font-size: 1.05rem; font-weight: 500; }
     
     /* 타입별 고유 테마 색상 */
@@ -61,17 +65,16 @@
     .pokemon-card:hover { transform: translateY(-6px); box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1); }
     .pokemon-id { font-size: 0.8rem; color: #64748b; font-weight: 700; margin-bottom: 8px; background: #f1f5f9; padding: 3px 10px; border-radius: 20px; }
     
-    /* 메가진화 카드용 배지 */
-    .mega-badge { font-size: 0.75rem; color: #ffffff; background: linear-gradient(135deg, #f43f5e, #e11d48); padding: 2px 8px; border-radius: 4px; font-weight: 800; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.5px; }
-
     .pokemon-img { width: 110px; height: 110px; object-fit: contain; margin-bottom: 12px; }
     .pokemon-name { font-size: 1.15rem; font-weight: 700; margin-bottom: 12px; color: #0f172a; min-height: 2.7rem; display: flex; align-items: center; justify-content: center; }
     .pokemon-types { display: flex; gap: 6px; }
     .type-badge { display: inline-flex; align-items: center; gap: 4px; padding: 4px 10px; border-radius: 12px; font-size: 0.75rem; color: white; font-weight: bold; }
     .type-badge img { width: 14px; height: 14px; }
 
-    footer { margin-top: 60px; padding: 20px 10px; border-top: 1px solid #e2e8f0; text-align: center; color: #94a3b8; font-size: 0.8rem; line-height: 1.5; }
-    footer p { margin-bottom: 5px; }
+    /* 푸터 영역의 가시성 및 저작권 명시 */
+    footer { margin-top: 60px; padding: 30px 20px; border-top: 2px dashed #cbd5e1; text-align: center; color: #64748b; font-size: 0.8rem; line-height: 1.6; background-color: #f8fafc; border-radius: 12px; }
+    footer p { margin-bottom: 8px; }
+    .disclaimer-title { font-weight: bold; color: #475569; font-size: 0.9rem; margin-bottom: 10px; }
 
     /* 전역 대기열 애니메이션 */
     .global-loading { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #f1f5f9; display: none; flex-direction: column; justify-content: center; align-items: center; z-index: 999; }
@@ -82,6 +85,11 @@
   </style>
 </head>
 <body>
+
+<!-- 상단 비공식 공지 배지 -->
+<div class="unofficial-banner">
+  ⚠️ 본 사이트는 개인이 연구 및 취미 목적으로 운영하는 <strong>비공식 팬 페이지(Unofficial Fan Page)</strong>이며, 원저작권사 및 공식 기업과 아무런 관련이 없습니다.
+</div>
 
 <div id="langModal" class="modal-overlay">
   <div class="modal">
@@ -95,11 +103,12 @@
 
 <div id="globalLoading" class="global-loading">
   <div class="spinner"></div>
-  <p id="loadingText">Connecting to PokeAPI...</p>
+  <p id="loadingText">Connecting to API...</p>
 </div>
 
 <div id="mainContainer" class="container">
-  <h1 id="mainTitle">[Fan-Made] Pokémon Ultimate Type Dex</h1>
+  <!-- 메인 노출 제목을 안전하고 직관적인 '포켓 타입 랩'으로 변경 -->
+  <h1 id="mainTitle">Fanmade</h1>
   <div id="subTitle" class="subtitle"></div>
 
   <div id="typeSelector" class="type-selector"></div>
@@ -112,16 +121,19 @@
   <div id="pokemonGrid" class="pokemon-grid"></div>
 </div>
 
+<!-- 저작권 표기 풋터 -->
 <footer>
-  <p>이 웹사이트는 개인 학습 및 재미를 위해 제작된 <strong>비영리 팬 메이드 공간</strong>입니다. 어떠한 상업적 광고나 수익 모델도 포함하고 있지 않습니다.</p>
-  <p>Pokémon, Pokémon character names, and images are trademarks of <strong>Nintendo, Creatures Inc., GAME FREAK inc., and The Pokémon Company</strong>.</p>
-  <p>All data is served from public open-source project <a href="https://pokeapi.co/" target="_blank" style="color: #64748b; text-decoration: underline;">PokeAPI</a>.</p>
+  <div class="disclaimer-title">LEGAL DISCLAIMER / 저작권 안내 및 면책 조항</div>
+  <p>본 웹사이트는 상업적 목적이 전혀 없는 <strong>순수 비영리 목적의 개인 학습 및 팬 가이드 공간</strong>입니다. 후원, 광고 수익(애드센스 등), 유료 기능 등을 절대 포함하지 않으며 금전적 이익을 취하지 않습니다.</p>
+  <p>사이트 내에 등장하는 포켓몬의 이름, 타입 이미지, 캐릭터 일러스트 등 모든 원본 데이터의 지식재산권(IP) 및 상표권은 <strong>Nintendo, Creatures Inc., GAME FREAK inc., 및 The Pokémon Company(포켓몬코리아 포함)</strong>에 귀속되어 있습니다.</p>
+  <p>본 사이트는 공식 브랜드와의 혼동을 주기 위한 의도가 없으며, 권리자로부터 삭제 요청 또는 가이드 수정 요구가 있을 경우 즉시 사이트가 폐쇄되거나 수정될 수 있습니다.</p>
+  <p>All programmatic data is dynamic-served from the public open-source project <a href="https://pokeapi.co/" target="_blank" style="color: #475569; text-decoration: underline;">PokeAPI</a>.</p>
 </footer>
 
 <script>
   const ui = {
-    ko: { title: "[팬 메이드] 포켓몬 타입 조합 도감 🔍", sub: "원하는 속성을 선택해 보세요! (최대 2개 조합 가능)", load: "데이터를 로딩 중입니다...<br>약 10~15초 정도 소요되니 창을 닫지 마세요! ⚡", ready: "속성을 조합하여 매칭해보세요!", none: "선택하신 타입 조합에 매칭되는 포켓몬이 없습니다. 🫥", reset: "필터 해제", unit: "마리", mega: "메가진화" },
-    en: { title: "[Fan-Made] Pokémon Type Matcher Pro 🔍", sub: "Select up to 2 types to match matching Pokémon!", load: "Syncing massive Gen 1-9 data from official PokeAPI...<br>Please stand by for about 10-15 seconds. ⚡", ready: "Select type icons to filter!", none: "No Pokémon found matching this type combination. 🫥", reset: "Clear Filter", unit: "Pokémon", mega: "MEGA" }
+    ko: { title: "포켓몬 타입 조합 연구소 🔍 [Fanmade]", sub: "원하는 속성을 선택해 보세요! (최대 2개 조합 가능)", load: "공식 오픈 API로부터 1세대~9세대 포켓몬 데이터를 동기화 중입니다...<br>전체 데이터(1,025마리) 로딩을 위해 약 15~20초 정도 소요되니 창을 닫지 마세요! ⚡", ready: "속성을 조합하여 매칭해보세요!", none: "선택하신 타입 조합에 매칭되는 포켓몬이 없습니다. 🫥", reset: "필터 해제", unit: "마리" },
+    en: { title: "Pokémon Type Matcher 🔍 [Fanmade]", sub: "Select up to 2 types to filter Pokémon!", load: "Syncing massive Gen 1-9 data from official PokeAPI...<br>Please stand by for about 15-20 seconds. ⚡", ready: "Select type icons to filter!", none: "No Pokémon found matching this type combination. 🫥", reset: "Clear Filter", unit: "Pokémon" }
   };
 
   const types = [
@@ -175,38 +187,38 @@
 
   async function loadUltimateData() {
     try {
-      // 1세대~9세대 기본 리스트 축적 (초기 로딩 가속화를 위해 800마리 메이저 데이터셋 집중 매핑)
       const resNormal = await fetch('https://pokeapi.co/api/v2/pokemon?limit=1025');
       const dataNormal = await resNormal.json();
 
-      const batchSize = 50; // 동시 다발 처리 수량 최적화
+      const batchSize = 40;
       for (let i = 0; i < dataNormal.results.length; i += batchSize) {
         const chunk = dataNormal.results.slice(i, i + batchSize);
         const promises = chunk.map(async (p) => {
-          const rDetail = await fetch(p.url).then(res => res.json());
-          
-          // [핵심 변경] 종(Species) URL을 직접 추적하여 공식 다국어 이름 가져오기
-          let nameKo = rDetail.name;
-          let nameEn = rDetail.name.charAt(0).toUpperCase() + rDetail.name.slice(1);
-          
           try {
+            const rDetail = await fetch(p.url).then(res => res.json());
+            
+            let nameKo = rDetail.name;
+            let nameEn = rDetail.name.charAt(0).toUpperCase() + rDetail.name.slice(1);
+            
             const specData = await fetch(rDetail.species.url).then(res => res.json());
             const koFind = specData.names.find(n => n.language.name === 'ko');
             const enFind = specData.names.find(n => n.language.name === 'en');
             if (koFind) nameKo = koFind.name;
             if (enFind) nameEn = enFind.name;
-          } catch(e) { /* Fallback 유지 */ }
 
-          const imgUrl = rDetail.sprites.other['official-artwork'].front_default || rDetail.sprites.front_default || '';
+            const imgUrl = rDetail.sprites.other['official-artwork'].front_default || rDetail.sprites.front_default || '';
 
-          if (imgUrl) {
-            return {
-              id: rDetail.id,
-              nameKo: nameKo,
-              nameEn: nameEn,
-              image: imgUrl,
-              types: rDetail.types.map(t => t.type.name)
-            };
+            if (imgUrl) {
+              return {
+                id: rDetail.id,
+                nameKo: nameKo,
+                nameEn: nameEn,
+                image: imgUrl,
+                types: rDetail.types.map(t => t.type.name)
+              };
+            }
+          } catch (singleErr) {
+            console.log("특수 데이터 예외 처리 스킵");
           }
           return null;
         });
@@ -221,7 +233,7 @@
 
     } catch (err) {
       console.error(err);
-      document.getElementById('loadingText').innerText = "PokeAPI 서버와의 통신 지연이 발생했습니다. 새로고침 후 다시 진입해 주세요.";
+      document.getElementById('loadingText').innerText = "데이터 동기화 도중 문제가 발생했습니다. 새로고침 후 다시 시도해 주세요.";
     }
   }
 
